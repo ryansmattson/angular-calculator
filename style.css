@@ -1,0 +1,118 @@
+button {
+  position: absolute;
+  height: 75px;
+  width: 100px;
+  border: solid black thick;
+}
+main {
+  height: 625px;
+  width: 450px;
+  background-color: tomato;
+  margin: 20px auto;
+}
+h2 {
+  margin: 10px;
+}
+p {
+  text-align: right;
+}
+.bottom {
+  position: relative;
+  height: 475px;
+  width: 450px;
+}
+.screen {
+  background-color: lightgray;
+  position: absolute;
+  top: 50%;
+  height: 100px;
+  width: 425px;
+  margin: -50px auto 0 auto;
+}
+.top {
+  background-color: gray;
+  height: 150px;
+  position: relative;
+}
+
+
+/*Bottom Row*/
+#zero {
+  bottom: 15px;
+  left: 10px;
+}
+#period {
+  bottom: 15px;
+  left: 120px;
+}
+#subtract {
+  bottom: 15px;
+  left: 230px;
+}
+#add {
+  height: 165px;
+  bottom: 15px;
+  left: 340px;
+}
+
+/*Second Row from bottom*/
+#one {
+  bottom: 105px;
+  left: 10px;
+}
+#two {
+  bottom: 105px;
+  left: 120px;
+}
+#three {
+  bottom: 105px;
+  left: 230px;
+}
+
+/*Third Row from bottom*/
+#four {
+  bottom: 195px;
+  left: 10px
+}
+#five {
+  bottom: 195px;
+  left: 120px;
+}
+#six {
+  bottom: 195px;
+  left: 230px;
+}
+#divide {
+  bottom: 195px;
+  left: 340px;
+}
+
+/*Fourth Row from bottom*/
+#seven {
+  bottom: 285px;
+  left: 10px;
+}
+#eight {
+  bottom: 285px;
+  left: 120px;
+}
+#nine {
+  bottom: 285px;
+  left: 230px;
+}
+#multiply {
+  bottom: 285px;
+  left: 340px;
+}
+
+/*Top Row*/
+#equals {
+  bottom: 375px;
+  left: 230px;
+  width: 210px;
+}
+#clear {
+  bottom: 375px;
+  left: 10px;
+  width: 210px;
+}
