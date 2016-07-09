@@ -26,7 +26,7 @@ angular.module('calculatorApp').controller('MainController', function($scope) {
         //Number --> Operator
         if (lastObject.number !== null && qualifier === 'operator') {
             $scope.output = input;
-            $scope.buttonsClickedArray.push(new MathObject(null, '+'));
+            $scope.buttonsClickedArray.push(new MathObject(null, input));
             console.log('Number --> Operator');
         }
         //If the last object is an operator and the input is period, overwrite var output.
