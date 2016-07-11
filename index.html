@@ -1,44 +1,76 @@
 <!DOCTYPE html>
 <html ng-app="calculatorApp">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <title>Angular Calculator</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css" charset="utf-8">
     <script src="angular.min.js" charset="utf-8"></script>
     <script src="client.js" charset="utf-8"></script>
-  </head>
-  <body ng-controller="MainController" class="container">
-    <header class="page-header"><h1>Angular Calculator</h1></header>
-    <main>
-      <div class="top">
-        <div class="screen">
-          <div class="numbers">
-            <p>{{output}}</p>
-          </div>
-        </div>
-      </div>
+</head>
 
-      <div class="bottom">
-        <button class="btn" id="zero" ng-click="clickZero()"><h2>0</h2></button>
-        <button class="btn" id="one" ng-click="clickOne()"><h2>1</h2></button>
-        <button class="btn" id="two" ng-click="clickTwo()"><h2>2</h2></button>
-        <button class="btn" id="three" ng-click="clickThree()"><h2>3</h2></button>
-        <button class="btn" id="four" ng-click="clickFour()"><h2>4</h2></button>
-        <button class="btn" id="five" ng-click="clickFive()"><h2>5</h2></button>
-        <button class="btn" id="six" ng-click="clickSix()"><h2>6</h2></button>
-        <button class="btn" id="seven" ng-click="clickSeven()"><h2>7</h2></button>
-        <button class="btn" id="eight" ng-click="clickEight()"><h2>8</h2></button>
-        <button class="btn" id="nine" ng-click="clickNine()"><h2>9</h2></button>
-        <button class="btn" id="period" ng-click="clickPeriod()"><h2>.</h2></button>
-        <button class="btn" id="add" ng-click="clickAdd()"><h2>+</h2></button>
-        <button class="btn" id="subtract" ng-click="clickSubtract()"><h2>-</h2></button>
-        <button class="btn" id="multiply" ng-click="clickMultiply()"><h2>x</h2></button>
-        <button class="btn" id="divide" ng-click="clickDivide()"><h2>÷</h2></button>
-        <button class="btn" id="equals" ng-click="clickEquals()"><h2>=</h2></button>
-        <button class="btn" id="clear" ng-click="clickClear()"><h2>C</h2></button>
-      </div>
+<body ng-controller="MainController" class="container">
+    <header class="page-header">
+        <h1>Angular Calculator</h1></header>
+    <div class="saved-results">
+        <h2>Saved Results:</h2>
+        <label class="label" id="clear-results" ng-click="clickClearResults()">
+            <h4>Clear Results</h4></label>
+        <ol>
+            <li ng-repeat="result in savedResultsArray"><span class="result-list" ng-click="useResult(result)">{{result}}</span></li>
+        </ol>
+    </div>
+
+    <main class="calculator">
+
+        <div class="top">
+            <div class="screen">
+                <div class="numbers">
+                    <h3 id="screen-output">{{output}}</h3>
+                    <h3 id="screen-result">{{result}}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom">
+            <label class="label calc-label" id="zero" ng-click="clickZero()">
+                <h2>0</h2></label>
+            <label class="label calc-label" id="one" ng-click="clickOne()">
+                <h2>1</h2></label>
+            <label class="label calc-label" id="two" ng-click="clickTwo()">
+                <h2>2</h2></label>
+            <label class="label calc-label" id="three" ng-click="clickThree()">
+                <h2>3</h2></label>
+            <label class="label calc-label" id="four" ng-click="clickFour()">
+                <h2>4</h2></label>
+            <label class="label calc-label" id="five" ng-click="clickFive()">
+                <h2>5</h2></label>
+            <label class="label calc-label" id="six" ng-click="clickSix()">
+                <h2>6</h2></label>
+            <label class="label calc-label" id="seven" ng-click="clickSeven()">
+                <h2>7</h2></label>
+            <label class="label calc-label" id="eight" ng-click="clickEight()">
+                <h2>8</h2></label>
+            <label class="label calc-label" id="nine" ng-click="clickNine()">
+                <h2>9</h2></label>
+            <label class="label calc-label" id="period" ng-click="clickPeriod()">
+                <h2>.</h2></label>
+            <label class="label calc-label" id="add" ng-click="clickAdd()">
+                <h2>+</h2></label>
+            <label class="label calc-label" id="subtract" ng-click="clickSubtract()">
+                <h2>-</h2></label>
+            <label class="label calc-label" id="multiply" ng-click="clickMultiply()">
+                <h2>x</h2></label>
+            <label class="label calc-label" id="divide" ng-click="clickDivide()">
+                <h2>÷</h2></label>
+            <label class="label calc-label" id="equals" ng-click="clickEquals()">
+                <h2>=</h2></label>
+            <label class="label calc-label" id="clear" ng-click="clickClear()">
+                <h2>C</h2></label>
+        </div>
     </main>
 
-  </body>
+</body>
+
 </html>

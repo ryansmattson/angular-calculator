@@ -1,15 +1,25 @@
+//POSSIBLE ADDITIONS:
+//*Keep the result if an operator is clicked after the equals function.
+
+
 angular.module('calculatorApp', []);
 
 angular.module('calculatorApp').controller('MainController', function($scope) {
 
     $scope.buttonsClickedArray = [];
     $scope.output = '';
+    $scope.result = '';
+    $scope.savedResultsArray = [];
 
 
     //Constructor to make new number/operator object.
     function MathObject(number, operator) {
         this.number = number,
             this.operator = operator
+    }
+
+    function evalString(array) {
+        return eval(array.join(' ')).toLocaleString();
     }
 
     //Send updates of what is being clicked to the DOM.
@@ -20,55 +30,59 @@ angular.module('calculatorApp').controller('MainController', function($scope) {
         //If the last object is a number AND the input is a number/period, concatenate and update var output.  Number --> Number
         if (lastObject.number !== null && (qualifier === 'number' || qualifier === 'period')) {
             $scope.output += input;
-            console.log('Number --> Number');
         }
         //If the last object is a number AND the input is an operator, overwrite var output.
         //Number --> Operator
         if (lastObject.number !== null && qualifier === 'operator') {
             $scope.output = input;
             $scope.buttonsClickedArray.push(new MathObject(null, input));
-            console.log('Number --> Operator');
         }
         //If the last object is an operator and the input is period, overwrite var output.
         //Operator --> Period
         if (lastObject.operator !== null && qualifier === 'period') {
             $scope.output = input;
             $scope.buttonsClickedArray.push(new MathObject('.', null));
-            console.log('Operator --> Period');
         }
-        console.log('output:', $scope.output);
-
+        if (lastObject.number !== null && qualifier === 'result') {
+            $scope.output = input;
+        }
     }
 
 
-    //    *** CLEAR/EQUALS CLICKS ***
+    //    *** CLEAR / EQUALS / CLEAR RESULTS / USE RESULT CLICKS ***
 
 
     //Clears the array of numbers and the output
     $scope.clickClear = function() {
-      $scope.buttonsClickedArray = [];
-      $scope.output = '';
-        console.log($scope.buttonsClickedArray);
-    }
-
-    //Maps through the array of objects, pulls out the number or operator and returns them to a temp array.  Then the temp array is joined into a string and evaluated.  Finally giving output the final value.
-    $scope.clickEquals = function() {
-      if ($scope.buttonsClickedArray.length === 0) {
-        return
-      } else {
-        var tempArray = $scope.buttonsClickedArray.map(function(value){
-          if (value.number !== null){
-            return (value.number);
-          } else if (value.operator !== null) {
-            return value.operator;
-          }
-        });
-        console.log(tempArray);
-        $scope.output = 'Result: ' + eval(tempArray.join(' '));
         $scope.buttonsClickedArray = [];
-      }
-
+        $scope.output = '';
+        $scope.result = '';
     }
+
+    $scope.clickClearResults = function() {
+        $scope.savedResultsArray = [];
+    }
+
+    //If the the buttonsClickedArray has 2 or less items, nothing happens (not enough input).
+    //Else it maps through the array of objects, pulls out the number or operator and returns them to a temp array.  Then the temp array is joined into a string and evaluated.  Finally giving result the final value.
+    $scope.clickEquals = function() {
+        if ($scope.buttonsClickedArray.length <= 2) {
+            return
+        } else {
+            $scope.output = '';
+            var tempArray = $scope.buttonsClickedArray.map(function(value) {
+                if (value.number !== null) {
+                    return (value.number);
+                } else if (value.operator !== null) {
+                    return value.operator;
+                }
+            });
+            $scope.result = evalString(tempArray);
+            $scope.savedResultsArray.push($scope.result);
+            $scope.buttonsClickedArray = [];
+        }
+    }
+
 
 
     //    *** NUMBER CLICKS ****
@@ -78,6 +92,8 @@ angular.module('calculatorApp').controller('MainController', function($scope) {
     //Send to get pretty printed on DOM.
     $scope.clickZero = function() {
         var lastObject = $scope.buttonsClickedArray[$scope.buttonsClickedArray.length - 1]
+
+        $scope.result = '';
 
         if ($scope.buttonsClickedArray.length > 1 && lastObject.operator !== null) {
             $scope.output = '';
@@ -91,12 +107,13 @@ angular.module('calculatorApp').controller('MainController', function($scope) {
             $scope.buttonsClickedArray.push(new MathObject('0', null));
         }
         $scope.prettyPrintClicks('0', 'number');
-        console.log($scope.buttonsClickedArray);
     }
 
 
     $scope.clickOne = function() {
         var lastObject = $scope.buttonsClickedArray[$scope.buttonsClickedArray.length - 1]
+
+        $scope.result = '';
 
         if ($scope.buttonsClickedArray.length > 1 && lastObject.operator !== null) {
             $scope.output = '';
@@ -111,12 +128,13 @@ angular.module('calculatorApp').controller('MainController', function($scope) {
             $scope.buttonsClickedArray.push(new MathObject('1', null));
         }
         $scope.prettyPrintClicks('1', 'number');
-        console.log($scope.buttonsClickedArray);
     }
 
 
     $scope.clickTwo = function() {
         var lastObject = $scope.buttonsClickedArray[$scope.buttonsClickedArray.length - 1]
+
+        $scope.result = '';
 
         if ($scope.buttonsClickedArray.length > 1 && lastObject.operator !== null) {
             $scope.output = '';
@@ -131,12 +149,13 @@ angular.module('calculatorApp').controller('MainController', function($scope) {
             $scope.buttonsClickedArray.push(new MathObject('2', null));
         }
         $scope.prettyPrintClicks('2', 'number');
-        console.log($scope.buttonsClickedArray);
     }
 
 
     $scope.clickThree = function() {
         var lastObject = $scope.buttonsClickedArray[$scope.buttonsClickedArray.length - 1]
+
+        $scope.result = '';
 
         if ($scope.buttonsClickedArray.length > 1 && lastObject.operator !== null) {
             $scope.output = '';
@@ -151,12 +170,13 @@ angular.module('calculatorApp').controller('MainController', function($scope) {
             $scope.buttonsClickedArray.push(new MathObject('3', null));
         }
         $scope.prettyPrintClicks('3', 'number');
-        console.log($scope.buttonsClickedArray);
     }
 
 
     $scope.clickFour = function() {
         var lastObject = $scope.buttonsClickedArray[$scope.buttonsClickedArray.length - 1]
+
+        $scope.result = '';
 
         if ($scope.buttonsClickedArray.length > 1 && lastObject.operator !== null) {
             $scope.output = '';
@@ -171,12 +191,13 @@ angular.module('calculatorApp').controller('MainController', function($scope) {
             $scope.buttonsClickedArray.push(new MathObject('4', null));
         }
         $scope.prettyPrintClicks('4', 'number');
-        console.log($scope.buttonsClickedArray);
     }
 
 
     $scope.clickFive = function() {
         var lastObject = $scope.buttonsClickedArray[$scope.buttonsClickedArray.length - 1]
+
+        $scope.result = '';
 
         if ($scope.buttonsClickedArray.length > 1 && lastObject.operator !== null) {
             $scope.output = '';
@@ -191,12 +212,13 @@ angular.module('calculatorApp').controller('MainController', function($scope) {
             $scope.buttonsClickedArray.push(new MathObject('5', null));
         }
         $scope.prettyPrintClicks('5', 'number');
-        console.log($scope.buttonsClickedArray);
     }
 
 
     $scope.clickSix = function() {
         var lastObject = $scope.buttonsClickedArray[$scope.buttonsClickedArray.length - 1]
+
+        $scope.result = '';
 
         if ($scope.buttonsClickedArray.length > 1 && lastObject.operator !== null) {
             $scope.output = '';
@@ -211,12 +233,13 @@ angular.module('calculatorApp').controller('MainController', function($scope) {
             $scope.buttonsClickedArray.push(new MathObject('6', null));
         }
         $scope.prettyPrintClicks('6', 'number');
-        console.log($scope.buttonsClickedArray);
     }
 
 
     $scope.clickSeven = function() {
         var lastObject = $scope.buttonsClickedArray[$scope.buttonsClickedArray.length - 1]
+
+        $scope.result = '';
 
         if ($scope.buttonsClickedArray.length > 1 && lastObject.operator !== null) {
             $scope.output = '';
@@ -231,13 +254,14 @@ angular.module('calculatorApp').controller('MainController', function($scope) {
             $scope.buttonsClickedArray.push(new MathObject('7', null));
         }
         $scope.prettyPrintClicks('7', 'number');
-        console.log($scope.buttonsClickedArray);
     }
 
 
 
     $scope.clickEight = function() {
         var lastObject = $scope.buttonsClickedArray[$scope.buttonsClickedArray.length - 1]
+
+        $scope.result = '';
 
         if ($scope.buttonsClickedArray.length > 1 && lastObject.operator !== null) {
             $scope.output = '';
@@ -252,12 +276,13 @@ angular.module('calculatorApp').controller('MainController', function($scope) {
             $scope.buttonsClickedArray.push(new MathObject('8', null));
         }
         $scope.prettyPrintClicks('8', 'number');
-        console.log($scope.buttonsClickedArray);
     }
 
 
     $scope.clickNine = function() {
         var lastObject = $scope.buttonsClickedArray[$scope.buttonsClickedArray.length - 1]
+
+        $scope.result = '';
 
         if ($scope.buttonsClickedArray.length > 1 && lastObject.operator !== null) {
             $scope.output = '';
@@ -272,8 +297,32 @@ angular.module('calculatorApp').controller('MainController', function($scope) {
             $scope.buttonsClickedArray.push(new MathObject('9', null));
         }
         $scope.prettyPrintClicks('9', 'number');
-        console.log($scope.buttonsClickedArray);
     }
+
+
+    //If there is no object, OR the last object is an operator, then add new object with result.
+    //Else If the last object is a number, then replace the last object with a new result object.
+
+    $scope.useResult = function(result) {
+        var lastObject = $scope.buttonsClickedArray[$scope.buttonsClickedArray.length - 1]
+        var tempString = result.replace(/\,/g, '');
+        console.log('Result =', result);
+        console.log('Result is a typeof:', typeof result);
+        console.log('tempString =', tempString);
+        console.log('tempString is a typeof:', typeof tempString);
+
+        $scope.result = '';
+
+        if ($scope.buttonsClickedArray.length === 0 || lastObject.operator !== null) {
+            $scope.buttonsClickedArray.push(new MathObject(tempString, null));
+        } else if (lastObject.number !== null) {
+            $scope.buttonsClickedArray[$scope.buttonsClickedArray.length - 1] = new MathObject(tempString, null);
+        }
+
+        $scope.prettyPrintClicks(tempString, 'result');
+    }
+
+
 
     //    *** PERIOD CLICKS ***
     //If the array is empty, create new object with '.' in the number key and pretty print.
@@ -281,6 +330,8 @@ angular.module('calculatorApp').controller('MainController', function($scope) {
     //if the last object is a number and there isn't already a '.' concatenate a '.' with the last object's number string.  Pretty print.  '.' is added to the array in prettyPrintClicks().
     $scope.clickPeriod = function() {
         var lastObject = $scope.buttonsClickedArray[$scope.buttonsClickedArray.length - 1]
+
+        $scope.result = '';
 
         if ($scope.buttonsClickedArray.length === 0) {
             $scope.output = '';
@@ -296,8 +347,6 @@ angular.module('calculatorApp').controller('MainController', function($scope) {
                 $scope.prettyPrintClicks('.', 'period');
             }
         }
-
-        console.log($scope.buttonsClickedArray);
     }
 
 
@@ -316,7 +365,6 @@ angular.module('calculatorApp').controller('MainController', function($scope) {
                 $scope.prettyPrintClicks('+', 'operator');
             }
         }
-        console.log($scope.buttonsClickedArray);
     }
 
 
@@ -330,7 +378,6 @@ angular.module('calculatorApp').controller('MainController', function($scope) {
                 $scope.prettyPrintClicks('-', 'operator');
             }
         }
-        console.log($scope.buttonsClickedArray);
     }
 
 
@@ -344,7 +391,6 @@ angular.module('calculatorApp').controller('MainController', function($scope) {
                 $scope.prettyPrintClicks('*', 'operator');
             }
         }
-        console.log($scope.buttonsClickedArray);
     }
 
 
@@ -357,11 +403,6 @@ angular.module('calculatorApp').controller('MainController', function($scope) {
                 $scope.prettyPrintClicks('/', 'operator');
             }
         }
-        console.log($scope.buttonsClickedArray);
     }
 
-
-
-
-
-})
+})//End of MainController
