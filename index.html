@@ -18,7 +18,7 @@
         <label class="label" id="clear-results" ng-click="clickClearResults()">
             <h4>Clear Results</h4></label>
         <ol>
-            <li ng-repeat="result in savedResultsArray"><span class="result-list" ng-click="useResult(result)">{{result}}</span></li>
+            <li ng-repeat="result in savedResultsArray track by $index"><span class="result-list" ng-click="useResult(result)">{{result}}</span></li>
         </ol>
     </div>
 
